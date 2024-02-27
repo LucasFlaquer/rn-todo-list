@@ -7,15 +7,19 @@ interface Props {
   task: {
     title: string
     isCompleted: boolean
+    id: string
   }
   toggleComplete: (id: string) => void
   onDelete: (id: string) => void
 }
 
-export function TodoItem({task}: Props) {
+export function TodoItem({ task, toggleComplete }: Props) {
+  function handleCheckPress() {
+    toggleComplete(task.id)
+  }
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleCheckPress}>
         {task.isCompleted ? (
           <CheckedMark />
         ): (

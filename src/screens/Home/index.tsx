@@ -9,13 +9,24 @@ import { TodoItem } from '../../components/TodoItem';
 interface Task {
   isCompleted: boolean
   title: string
+  id: string
 }
 
 export function Home() {
   const [tasks, setTasks] = useState<Task[]>([
-    { isCompleted: false, title: 'first task' },
-    {isCompleted: true, title: 'second task'}
+    { isCompleted: false, title: 'first task', id: '1235' },
+    {isCompleted: true, title: 'second task', id: '123'}
   ])
+
+  function toggleTask(id: string) {
+    const updatedTasks = tasks.map(task => {
+      if (task.id !== id) return task
+      return {
+        ...task, isCompleted: !task.isCompleted
+      }
+    })
+    setTasks(updatedTasks)
+  }
 
   return (
     <View style={styles.container}>
@@ -46,7 +57,7 @@ export function Home() {
         <FlatList
           data={tasks}
           ItemSeparatorComponent={()=> <View style={{height: 8}}></View>}
-          renderItem={({item}) => <TodoItem task={item} onDelete={()=>{}} toggleComplete={() => {}} />}
+          renderItem={({ item }) => <TodoItem key={item.id} task={item} onDelete={() => { }} toggleComplete={toggleTask} />}
         />
       </View>
     </View>
