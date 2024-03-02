@@ -13,10 +13,15 @@ interface Props {
   onDelete: (id: string) => void
 }
 
-export function TodoItem({ task, toggleComplete }: Props) {
+export function TodoItem({ task, toggleComplete, onDelete }: Props) {
   function handleCheckPress() {
     toggleComplete(task.id)
   }
+
+  function handleRemovePress() {
+    onDelete(task.id)
+  }
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleCheckPress}>
@@ -29,7 +34,7 @@ export function TodoItem({ task, toggleComplete }: Props) {
       <Text style={{ ...styles.title, ...(task.isCompleted && styles.checkedTitle) }}>
         {task.title}
       </Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleRemovePress}>
         <Trash/>
       </TouchableOpacity>
     </View>
