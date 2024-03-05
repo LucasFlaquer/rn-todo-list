@@ -5,6 +5,7 @@ import Plus from '../../assets/plus.svg'
 import { DefaultTheme } from '../../themes/DefautTheme';
 import { useState } from 'react';
 import { TodoItem } from '../../components/TodoItem';
+import { NoRecords } from '../../components/NoRecords';
 
 interface Task {
   isCompleted: boolean
@@ -58,7 +59,6 @@ export function Home() {
       id: `${Math.random()*100}-${Math.random()*8}`,
       title: taskTitle
     }
-    console.log(newTask)
     setTasks([...tasks, newTask])
     setTaskTitle('')
   }
@@ -98,6 +98,7 @@ export function Home() {
           data={tasks}
           ItemSeparatorComponent={()=> <View style={{height: 8}}></View>}
           renderItem={({ item }) => <TodoItem key={item.id} task={item} onDelete={removeTask} toggleComplete={toggleTask} />}
+          ListEmptyComponent={<NoRecords />}
         />
       </View>
     </View>
