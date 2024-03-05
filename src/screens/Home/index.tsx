@@ -13,6 +13,7 @@ interface Task {
 }
 
 export function Home() {
+  const [taskTitle, setTaskTitle] = useState('')
   const [tasks, setTasks] = useState<Task[]>([
     { isCompleted: false, title: 'first task', id: '1235' },
     {isCompleted: true, title: 'second task', id: '123'}
@@ -50,6 +51,18 @@ export function Home() {
     }    
   }
 
+  function createNewTask() {
+    if(taskTitle.length === 0) return
+    const newTask: Task = {
+      isCompleted: false,
+      id: `${Math.random()*100}-${Math.random()*8}`,
+      title: taskTitle
+    }
+    console.log(newTask)
+    setTasks([...tasks, newTask])
+    setTaskTitle('')
+  }
+
   const createdTasks = tasks.length
   const finishedTasks = tasks.filter(task => task.isCompleted).length
 
@@ -62,8 +75,10 @@ export function Home() {
             style={styles.taskInput}
             placeholder='Adicione uma nova tarefa'
             placeholderTextColor={DefaultTheme.colors.gray300}
+            onChangeText={setTaskTitle}
+            value={taskTitle}
           />
-          <TouchableOpacity style={styles.taskButton}>
+          <TouchableOpacity style={styles.taskButton} onPress={createNewTask}>
             <Plus />
           </TouchableOpacity>
         </View>
